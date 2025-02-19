@@ -6,19 +6,19 @@ export class ContactoUpdateRequest {
    */
   @IsString()
   @IsOptional()
-  nombre: string;
+  nombre?: string;
 
   /**
    * telefono
    */
   @IsString()
   @IsOptional()
-  telefono: string;
+  telefono?: string;
 
   /**
    * email
    */
   @IsEmail()
   @IsOptional()
-  email: string;
+  email?: string;
 }

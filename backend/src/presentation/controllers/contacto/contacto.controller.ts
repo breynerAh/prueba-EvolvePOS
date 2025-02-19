@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ContactoRequest } from 'src/domain/contacto/dto/contacto-request.dto';
@@ -16,6 +17,7 @@ import { GetAllContactoService } from '../../../services/useCases/contacto/getAl
 import { DeleteContactoService } from '../../../services/useCases/contacto/deleteContacto.service';
 import { UpdateContactoService } from '../../../services/useCases/contacto/updateContacto.service';
 import { GetOneContactoService } from '../../../services/useCases/contacto/getOneContacto.service';
+import { GetSearchContactoService } from 'src/services/useCases/contacto/getSearchContacto.service';
 
 @Controller('contacto')
 @ApiTags('Contacto')
@@ -26,6 +28,7 @@ export class ContactoController {
     private readonly updateContactoService: UpdateContactoService,
     private readonly deleteContactoService: DeleteContactoService,
     private readonly getOneContactoService: GetOneContactoService,
+    private readonly getSearchContactoService: GetSearchContactoService,
   ) {}
 
   @Get('/:id')
@@ -34,6 +37,14 @@ export class ContactoController {
     @Param('id') id: number,
   ): Promise<ContactoResponse | null> {
     return await this.getOneContactoService.getOneContacto(id);
+  }
+
+  @Get('/search/:id')
+  @ApiOperation({ summary: 'Obtener un contacto' })
+  async getSearchContacto(
+    @Query() query: ContactoUpdateRequest,
+  ): Promise<ContactoResponse | null> {
+    return await this.getSearchContactoService.getSearchContacto(query);
   }
 
   @Get()
